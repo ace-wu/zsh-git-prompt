@@ -58,6 +58,15 @@ function update_current_git_vars() {
 	GIT_CONFLICTS=$__CURRENT_GIT_STATUS[5]
 	GIT_CHANGED=$__CURRENT_GIT_STATUS[6]
 	GIT_UNTRACKED=$__CURRENT_GIT_STATUS[7]
+
+    case "$GIT_BRANCH" in
+        master)
+        GIT_BRANCH="%{$fg_bold[red]%}$GIT_BRANCH%{${reset_color}%}"
+        ;;
+        dev)
+        GIT_BRANCH="%{$fg_bold[yellow]%}$GIT_BRANCH%{${reset_color}%}"
+        ;;
+    esac
 }
 
 
@@ -94,15 +103,17 @@ git_super_status() {
 
 # Default values for the appearance of the prompt. Configure at will.
 ZSH_THEME_GIT_PROMPT_PREFIX="("
-ZSH_THEME_GIT_PROMPT_SUFFIX=")"
+
+ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[cyan]%}"
+ZSH_THEME_GIT_PROMPT_BEHIND="%{<%G%}"
+ZSH_THEME_GIT_PROMPT_AHEAD="%{>%G%}"
+
 ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
-ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[red]%}%{●%G%}"
-ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{✖%G%}"
-ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[blue]%}%{✚%G%}"
-ZSH_THEME_GIT_PROMPT_BEHIND="%{↓%G%}"
-ZSH_THEME_GIT_PROMPT_AHEAD="%{↑%G%}"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{…%G%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}%{✔%G%}"
 
+ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[blue]%}%{+%G%}"
+ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{x%G%}"
+ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[yellow]%}%{*%G%}"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{.%G%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}%{o%G%}"
 
+ZSH_THEME_GIT_PROMPT_SUFFIX=")"
